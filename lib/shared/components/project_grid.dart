@@ -4,8 +4,8 @@ import 'package:flutter_portfolio/feature/ecom_app/ecom_app.dart';
 import 'package:flutter_portfolio/shared/components/device_preview_container.dart';
 import '../theme/app_theme.dart';
 
-class ProjectsGrid extends StatelessWidget {
-  ProjectsGrid({super.key});
+class ProjectGridView extends StatelessWidget {
+  ProjectGridView({super.key});
 
   final List<ProjectData> projects = [
     ProjectData(
@@ -103,20 +103,44 @@ class ProjectsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 1.5,
-        crossAxisSpacing: 24,
-        mainAxisSpacing: 24,
+    return Container(
+      width: double.infinity,
+      color: Colors.grey[50],
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: Padding(
+            padding: const EdgeInsets.all(48),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'PROJECTS',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const SizedBox(height: 48),
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1.5,
+                    crossAxisSpacing: 32,
+                    mainAxisSpacing: 32,
+                  ),
+                  itemCount: projects.length,
+                  itemBuilder: (context, index) {
+                    final project = projects[index];
+                    return ProjectCard(project: project);
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
-      itemCount: projects.length,
-      itemBuilder: (context, index) {
-        final project = projects[index];
-        return ProjectCard(project: project);
-      },
     );
   }
 }

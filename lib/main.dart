@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_portfolio/shared/components/project_grid.dart';
-import 'package:flutter_portfolio/shared/theme/app_theme.dart';
-
-import 'shared/components/header.dart';
+import 'shared/theme/app_theme.dart';
+import 'feature/home/home_screen.dart';
 
 void main() {
-  runApp(const PortfolioApp());
+  runApp(const MyApp());
 }
 
-class PortfolioApp extends StatelessWidget {
-  const PortfolioApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-       title: 'Mobile Developer Portfolio',
+      title: 'Portfolio',
+      debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       home: const HomePage(),
     );
@@ -29,88 +29,63 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final projectsKey = GlobalKey();
   final aboutKey = GlobalKey();
+  final projectsKey = GlobalKey();
+  final ScrollController _scrollController = ScrollController();
+
+  void _scrollToSection(GlobalKey key) {
+    final context = key.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppTheme.backgroundPrimary,
-              Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: [
+              Text(
+                'POTIKORN',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const Spacer(),
+              TextButton(
+                onPressed: () => _scrollToSection(aboutKey),
+                child: const Text('ABOUT'),
+              ),
+              const SizedBox(width: 24),
+              TextButton(
+                onPressed: () => _scrollToSection(projectsKey),
+                child: const Text('PROJECTS'),
+              ),
             ],
-            stops: const [0.0, 1.0],
           ),
         ),
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              floating: true,
-              title: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: [
-                    Text(
-                      'Portfolio',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    const Spacer(),
-                    TextButton(
-                      onPressed: () {
-                        Scrollable.ensureVisible(
-                          projectsKey.currentContext!,
-                          duration: const Duration(milliseconds: 500),
-                        );
-                      },
-                      child: const Text('Projects'),
-                    ),
-                    const SizedBox(width: 24),
-                    TextButton(
-                      onPressed: () {
-                        Scrollable.ensureVisible(
-                          aboutKey.currentContext!,
-                          duration: const Duration(milliseconds: 500),
-                        );
-                      },
-                      child: const Text('About'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1200),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 48),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 48),
-                        const Header(),
-                        const SizedBox(height: 48),
-                        Text(
-                          'Featured Projects',
-                          style: Theme.of(context).textTheme.headlineLarge,
-                        ),
-                        const SizedBox(height: 24),
-                        ProjectsGrid(key: projectsKey),
-                        const SizedBox(height: 48),
-                        // ProfileSection(key: aboutKey),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+      ),
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          children: [
+            HomeScreen(key: aboutKey),
+            ProjectGridView(key: projectsKey),
           ],
         ),
       ),
