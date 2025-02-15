@@ -58,8 +58,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/ecommerce_mockup.png
-    - assets/social_mockup.png
+    - assets/cover/
+    - assets/images/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

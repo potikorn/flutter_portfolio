@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_portfolio/feature/arbotena/arbotena_app.dart';
 import 'package:flutter_portfolio/feature/ecom_app/ecom_app.dart';
 import 'package:flutter_portfolio/shared/components/device_preview_container.dart';
 import '../theme/app_theme.dart';
@@ -8,13 +9,14 @@ class ProjectsGrid extends StatelessWidget {
 
   final List<ProjectData> projects = [
     ProjectData(
-      title: 'E-commerce App',
-      description: 'A modern e-commerce application with clean UI',
-      mockupImage: 'assets/ecommerce_mockup.png',
+      title: 'E-Com App',
+      description:
+          'A modern staff management e-comm application with clean UI. The first app in Germany that delivers groceries from super markets directly to your front door in a few minutes.',
+      mockupImage: 'assets/cover/ecom_app_cover.png',
       appEntry: const EcomApp(),
       detail: ProjectDetail(
         title: 'Delivery Staff Management',
-        subtitle: 'E-commerce App',
+        subtitle: 'E-Com App',
         icon: Icons.delivery_dining,
         iconColor: AppTheme.blue,
         description:
@@ -54,41 +56,47 @@ class ProjectsGrid extends StatelessWidget {
       ),
     ),
     ProjectData(
-      title: 'Social Media App',
-      description: 'Feature-rich social networking platform',
-      mockupImage: 'assets/social_mockup.png',
+      title: 'Arbotena',
+      description:
+          'AI-powered health assessment app that helps users identify potential food allergies and intolerances through comprehensive questionnaires and product scanning.',
+      mockupImage: 'assets/cover/arbotena_cover.png',
+      appEntry: const ArbotenaApp(),
       detail: ProjectDetail(
-        title: 'Social Networking Platform',
-        subtitle: 'Social Media App',
+        title: 'Arbotena - AI Health Assessment',
+        subtitle: 'Revolutionizing Food Allergy & Intolerance Detection',
         icon: Icons.people,
         iconColor: AppTheme.blue,
         description:
-            'A modern social networking platform built with Flutter, enabling users to connect, share, and interact in real-time.',
+            'A modern social networking platform built with React Native, enabling users to connect, share, and interact in real-time.',
         features: [
           ProjectFeature(
             icon: Icons.chat_bubble,
-            title: 'Real-time Messaging',
+            title:
+                'Comprehensive health questionnaire covering physical appearance, symptoms, and current health status',
             description:
-                'Instant messaging with read receipts and typing indicators',
+                'AI-powered analysis based on real doctor diagnosis datasets',
           ),
           ProjectFeature(
             icon: Icons.photo_library,
-            title: 'Media Sharing',
-            description: 'Share photos, videos, and stories with your network',
+            title: 'Product label scanning to check ingredient compatibility',
+            description: 'Personalized food and ingredient recommendations',
           ),
           ProjectFeature(
             icon: Icons.group,
-            title: 'Group Features',
-            description: 'Create and manage groups with shared interests',
+            title: 'Detailed allergy and intolerance profiles',
+            description:
+                'Easy-to-use interface with clear results visualization',
           ),
         ],
         techStack: [
-          TechStackItem(label: 'Flutter', color: AppTheme.blue),
-          TechStackItem(label: 'Firebase', color: AppTheme.navy),
-          TechStackItem(label: 'WebRTC', color: AppTheme.darkNavy),
+          TechStackItem(
+              label: 'React Native (Typescript)', color: AppTheme.blue),
+          TechStackItem(label: 'Machine Learning', color: AppTheme.darkNavy),
+          TechStackItem(label: 'Computer Vision', color: AppTheme.blue),
+          TechStackItem(label: 'Health Data Analytics', color: AppTheme.navy),
         ],
         previewNote:
-            'Experience the interactive demo of our social platform. Note that some features like real-time messaging are simulated in this preview.',
+            'This app demonstrates how AI can transform traditional medical processes into accessible digital solutions while maintaining professional medical standards.',
       ),
     ),
   ];
@@ -155,6 +163,7 @@ class ProjectCard extends StatelessWidget {
                 child: Image.asset(
                   project.mockupImage,
                   fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
                   width: double.infinity,
                 ),
               ),
@@ -476,7 +485,7 @@ class ProjectDetailView extends StatelessWidget {
             border: Border.all(color: Colors.grey[200]!),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 'Tech Stack',

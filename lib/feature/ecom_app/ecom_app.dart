@@ -12,6 +12,7 @@ class EcomApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         textTheme: GoogleFonts.nunitoTextTheme(),
+        scaffoldBackgroundColor: Color(0xFBFBFBFF)
       ),
       home: const EcomMainScreen(),
     );
